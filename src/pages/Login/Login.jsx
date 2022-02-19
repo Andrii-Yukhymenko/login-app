@@ -55,13 +55,13 @@ function Login() {
         <S_Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <S_Label>Login</S_Label>
-            <S_Input {...register("firstName")} />
-            <S_InputError>{errors.firstName?.message}</S_InputError>
+            <S_Input {...register("email")} />
+            <S_InputError>{errors.email?.message}</S_InputError>
           </label>
           <label>
-            <S_Label>Passwor</S_Label>
-            <S_Input {...register("age")} />
-            <S_InputError>{errors.age?.message}</S_InputError>
+            <S_Label>Password</S_Label>
+            <S_Input type="password" {...register("password")} />
+            <S_InputError>{errors.password?.message}</S_InputError>
           </label>
           <input type="submit" />
         </S_Form>

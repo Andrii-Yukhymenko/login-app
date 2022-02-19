@@ -2,7 +2,13 @@ import * as yup from "yup";
 
 export const schema = yup
   .object({
-    firstName: yup.string().required(),
-    age: yup.number().positive().integer().required(),
+    email: yup.string().email("Invalid email format").required("Required"),
+    password: yup
+      .string()
+      .required("Please Enter your password")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+        "Password must contain 8 characters, one uppercase, one Lowercase and one number"
+      ),
   })
   .required();
