@@ -4,11 +4,11 @@ import App from "./components/App";
 import "normalize-css-ultimate/normalize-ultimate.css";
 import { BrowserRouter } from "react-router-dom";
 
-const Context = createContext(null);
-const user = true;
+export const Context = createContext(null);
+const user = false;
 
 ReactDOM.render(
-  <Context.Provider value={user}>
+  <Context.Provider value={{user}}>
     <BrowserRouter>
       <React.StrictMode>
         <App />

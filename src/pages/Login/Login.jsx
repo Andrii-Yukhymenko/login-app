@@ -37,7 +37,7 @@ const S_Title = styled.h1`
   font-size: 23px;
   margin: 0 0 30px 0;
   text-align: center;
-`
+`;
 function Login() {
   const {
     register,

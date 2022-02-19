@@ -52,7 +52,7 @@ function Registration() {
   return (
     <S_Wrapper>
       <S_Container>
-        <S_Title>Войти в аккаунт</S_Title>
+        <S_Title>Регистрация</S_Title>
         <S_Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <S_Label>Login</S_Label>
