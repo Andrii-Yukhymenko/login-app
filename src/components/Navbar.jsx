@@ -2,7 +2,8 @@ import React, { useContext } from "react";
 import { S_Container } from "../styled/S_Container";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Context } from "../index";
+import { Context } from "../context/Context";
+import { useNavigate } from "react-router-dom";
 
 const S_Wrapper = styled.section`
   padding: 20px;
@@ -32,6 +33,7 @@ const S_Button = styled.button`
 `;
 function Navbar() {
   const { user } = useContext(Context);
+  const navigate = useNavigate();
   return (
     <S_Wrapper>
       <S_Container>
@@ -39,7 +41,11 @@ function Navbar() {
           <S_Logo to="/">React App</S_Logo>
           <div>
             {user && <S_Link to="/me">Профиль</S_Link>}
-            <S_Button>{user ? "Выйти" : "Войти"}</S_Button>
+            <S_Button
+              onClick={user ? () => alert("Logout") : () => navigate("/login")}
+            >
+              {user ? "Выйти" : "Войти"}
+            </S_Button>
           </div>
         </S_Inner>
       </S_Container>

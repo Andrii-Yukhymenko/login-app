@@ -38,6 +38,10 @@ const S_Title = styled.h1`
   margin: 0 0 30px 0;
   text-align: center;
 `;
+const S_Button = styled.button`
+  padding: 10px 20px;
+  border-radius: 5px; 
+`
 
 function Registration() {
   const {
@@ -69,7 +73,7 @@ function Registration() {
             <S_Input type="password" {...register("passwordConfirmation")} />
             <S_InputError>{errors.passwordConfirmation?.message}</S_InputError>
           </label>
-          <input type="submit" />
+          <S_Button type='submit'>Зарегистрироваться</S_Button>
         </S_Form>
       </S_Container>
     </S_Wrapper>

@@ -1,30 +1,18 @@
-import React, {createContext, useState} from "react";
+import React, { createContext, useState } from "react";
 import ReactDOM from "react-dom";
 import App from "./components/App";
 import "normalize-css-ultimate/normalize-ultimate.css";
 import { BrowserRouter } from "react-router-dom";
-import API from './API'
-
-export const Context = createContext(null);
-// const [user, setUser] = useState(null);
-let user = false;
-const test = () => {
-  console.log('hello')
-}
-const login = () => {
-  API.login({
-    "email": "test1@example.com",
-    "password": "string"
-  })
-}
+import API from "./API";
+import ContextProvider from "./context/Context";
 
 ReactDOM.render(
-  <Context.Provider value={{user, login, test}}>
-    <BrowserRouter>
+  <BrowserRouter>
+    <ContextProvider>
       <React.StrictMode>
         <App />
       </React.StrictMode>
-    </BrowserRouter>
-  </Context.Provider>,
+    </ContextProvider>
+  </BrowserRouter>,
   document.getElementById("root")
 );

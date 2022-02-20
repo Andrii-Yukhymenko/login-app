@@ -38,6 +38,11 @@ const S_Title = styled.h1`
   margin: 0 0 30px 0;
   text-align: center;
 `;
+const S_Button = styled.button`
+  padding: 10px 20px;
+  border-radius: 5px;
+`;
+
 function Me() {
   const {
     register,
@@ -63,7 +68,7 @@ function Me() {
             <S_Input {...register("age")} />
             <S_InputError>{errors.age?.message}</S_InputError>
           </label>
-          <input type="submit" />
+          <S_Button type="submit">Подтвердить</S_Button>
         </S_Form>
       </S_Container>
     </S_Wrapper>
