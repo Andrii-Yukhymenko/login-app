@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./validationSchema";
 import styled from "styled-components";
 import { S_Container } from "../../styled/S_Container";
+import { Context } from "../../context/Context";
+import Loader from "../../components/Loader/Loader";
 
 const S_Wrapper = styled.section`
   margin: 50px 0 0 0;
@@ -40,10 +42,12 @@ const S_Title = styled.h1`
 `;
 const S_Button = styled.button`
   padding: 10px 20px;
-  border-radius: 5px; 
-`
+  border-radius: 5px;
+`;
 
 function Login() {
+  const [loading, setLoading] = useState(false);
+  const { login } = useContext(Context);
   const {
     register,
     handleSubmit,
@@ -51,7 +55,12 @@ function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    await setLoading(true);
+    console.log(data);
+    await login(data);
+    await setLoading(false);
+  };
 
   return (
     <S_Wrapper>
@@ -68,7 +77,8 @@ function Login() {
             <S_Input type="password" {...register("password")} />
             <S_InputError>{errors.password?.message}</S_InputError>
           </label>
-          <S_Button type='submit'>Войти</S_Button>
+          <S_Button type="submit">Войти</S_Button>
+          {loading && <Loader />}
         </S_Form>
       </S_Container>
     </S_Wrapper>

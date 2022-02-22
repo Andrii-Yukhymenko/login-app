@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import styled from "styled-components";
 import { S_Container } from "../../styled/S_Container";
 import { schema } from "./validationSchema";
+import { Context } from "../../context/Context";
+import { useContext } from "react";
 
 const S_Wrapper = styled.section`
   margin: 50px 0 0 0;
@@ -40,10 +42,11 @@ const S_Title = styled.h1`
 `;
 const S_Button = styled.button`
   padding: 10px 20px;
-  border-radius: 5px; 
-`
+  border-radius: 5px;
+`;
 
 function Registration() {
+  const { register: registerAccount } = useContext(Context);
   const {
     register,
     handleSubmit,
@@ -51,7 +54,16 @@ function Registration() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = ({ email, password, firstName, lastName }) => {
+    const reformattedData = {
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    };
+    console.log(reformattedData);
+    registerAccount(reformattedData);
+  };
 
   return (
     <S_Wrapper>
@@ -59,9 +71,19 @@ function Registration() {
         <S_Title>Регистрация</S_Title>
         <S_Form onSubmit={handleSubmit(onSubmit)}>
           <label>
-            <S_Label>Login</S_Label>
+            <S_Label>Email</S_Label>
             <S_Input {...register("email")} />
             <S_InputError>{errors.email?.message}</S_InputError>
+          </label>
+          <label>
+            <S_Label>First name</S_Label>
+            <S_Input {...register("firstName")} />
+            <S_InputError>{errors.firstName?.message}</S_InputError>
+          </label>
+          <label>
+            <S_Label>Last name</S_Label>
+            <S_Input {...register("lastName")} />
+            <S_InputError>{errors.lastName?.message}</S_InputError>
           </label>
           <label>
             <S_Label>Password</S_Label>
@@ -73,7 +95,7 @@ function Registration() {
             <S_Input type="password" {...register("passwordConfirmation")} />
             <S_InputError>{errors.passwordConfirmation?.message}</S_InputError>
           </label>
-          <S_Button type='submit'>Зарегистрироваться</S_Button>
+          <S_Button type="submit">Зарегистрироваться</S_Button>
         </S_Form>
       </S_Container>
     </S_Wrapper>

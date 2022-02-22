@@ -32,7 +32,7 @@ const S_Button = styled.button`
   border: 2px solid #fff;
 `;
 function Navbar() {
-  const { user } = useContext(Context);
+  const { user, logout } = useContext(Context);
   const navigate = useNavigate();
   return (
     <S_Wrapper>
@@ -42,7 +42,7 @@ function Navbar() {
           <div>
             {user && <S_Link to="/me">Профиль</S_Link>}
             <S_Button
-              onClick={user ? () => alert("Logout") : () => navigate("/login")}
+              onClick={user ? () => logout() : () => navigate("/login")}
             >
               {user ? "Выйти" : "Войти"}
             </S_Button>
