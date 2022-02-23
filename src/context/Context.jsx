@@ -10,12 +10,11 @@ const ContextProvider = ({ children }) => {
   const [user, setUser] = useState(
     Cookies.get("user") ? Cookies.get("user") : false
   );
-  // const user = false;
   const register = async (data) => {
     await API.register(data)
       .then((response) => {
         if (response.status === 201) {
-          console.log("Register successful");
+          navigate("/me");
         }
         login(data);
       })
@@ -32,7 +31,6 @@ const ContextProvider = ({ children }) => {
     API.login(data)
       .then((response) => {
         if (response.status === 200) {
-          console.log("Login successful");
           setUser(true);
           Cookies.set("user", response.data.token);
           navigate("/me");
@@ -47,12 +45,49 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
+  const getUserData = () => {
+    API.getUserData(Cookies.get('user'))
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("success");
+          console.log(response.data);
+          return response;
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 422) {
+          console.log(e.response.data.errors.email);
+        }
+        if (e.response.status === 404) {
+          console.log("API url error");
+        }
+      });
+  };
+  const patchUserData = (data) => {
+    API.patchUserData(data)
+      .then((response) => {
+        if (response.status === 200) {
+          getUserData();
+          console.log("patched");
+        }
+      })
+      .catch((e) => {
+        if (e.response.status === 422) {
+          console.log(e.response.data.errors.email);
+        }
+        if (e.response.status === 404) {
+          console.log("API url error");
+        }
+      });
+  };
   const logout = () => {
     setUser(false);
-    Cookies.remove();
+    Cookies.remove("user");
   };
   return (
-    <Context.Provider value={{ user, login, register, logout }}>
+    <Context.Provider
+      value={{ user, login, register, logout, patchUserData, getUserData }}
+    >
       {children}
     </Context.Provider>
   );

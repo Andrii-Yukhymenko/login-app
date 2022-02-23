@@ -40,7 +40,9 @@ function Navbar() {
         <S_Inner>
           <S_Logo to="/">React App</S_Logo>
           <div>
-            {user && <S_Link to="/me">Профиль</S_Link>}
+            <S_Link to={user ? "/me" : "/registration"}>
+              {user ? "Профиль" : "Регистрация"}
+            </S_Link>
             <S_Button
               onClick={user ? () => logout() : () => navigate("/login")}
             >

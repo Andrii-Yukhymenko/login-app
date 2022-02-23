@@ -7,7 +7,7 @@
   position: absolute;
   width: 50%;
   height: 50%;
-  border: 5px solid #ffffff;
+  border: 3px solid #000;
   border-top-color: transparent;
   border-radius: 50%;
 }
@@ -17,8 +17,8 @@
   left: 50%;
 }
 .loadingio-spinner-rolling-o9t3h6sdt9 {
-  width: 30px;
-  height: 30px;
+  width: 15px;
+  height: 15px;
   display: inline-block;
   overflow: hidden;
   background: none;
