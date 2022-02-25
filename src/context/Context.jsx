@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 export const Context = createContext(null);
 const ContextProvider = ({ children }) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState(
+  const [userInfo, setUserInfo] = useState({});
+  const [authStatus, setAuthStatus] = useState(
     Cookies.get("user") ? Cookies.get("user") : false
   );
   const register = async (data) => {
@@ -31,8 +32,9 @@ const ContextProvider = ({ children }) => {
     API.login(data)
       .then((response) => {
         if (response.status === 200) {
-          setUser(true);
+          setAuthStatus(true);
           Cookies.set("user", response.data.token);
+          console.log("ladsjdsjkds");
           navigate("/me");
         }
       })
@@ -46,12 +48,13 @@ const ContextProvider = ({ children }) => {
       });
   };
   const getUserData = () => {
-    API.getUserData(Cookies.get('user'))
+    API.getUserData(Cookies.get("user"))
       .then((response) => {
         if (response.status === 200) {
           console.log("success");
           console.log(response.data);
-          return response;
+          setUserInfo(response.data);
+          return "hello";
         }
       })
       .catch((e) => {
@@ -64,10 +67,11 @@ const ContextProvider = ({ children }) => {
       });
   };
   const patchUserData = (data) => {
-    API.patchUserData(data)
+    API.patchUserData(Cookies.get('user'), data)
       .then((response) => {
         if (response.status === 200) {
-          getUserData();
+          // getUserData();
+          setUserInfo(response.data);
           console.log("patched");
         }
       })
@@ -81,12 +85,20 @@ const ContextProvider = ({ children }) => {
       });
   };
   const logout = () => {
-    setUser(false);
+    setAuthStatus(false);
     Cookies.remove("user");
   };
   return (
     <Context.Provider
-      value={{ user, login, register, logout, patchUserData, getUserData }}
+      value={{
+        authStatus,
+        userInfo,
+        login,
+        register,
+        logout,
+        patchUserData,
+        getUserData,
+      }}
     >
       {children}
     </Context.Provider>

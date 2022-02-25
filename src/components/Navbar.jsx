@@ -32,7 +32,7 @@ const S_Button = styled.button`
   border: 2px solid #fff;
 `;
 function Navbar() {
-  const { user, logout } = useContext(Context);
+  const { authStatus, logout } = useContext(Context);
   const navigate = useNavigate();
   return (
     <S_Wrapper>
@@ -40,13 +40,13 @@ function Navbar() {
         <S_Inner>
           <S_Logo to="/">React App</S_Logo>
           <div>
-            <S_Link to={user ? "/me" : "/registration"}>
-              {user ? "Профиль" : "Регистрация"}
+            <S_Link to={authStatus ? "/me" : "/registration"}>
+              {authStatus ? "Профиль" : "Регистрация"}
             </S_Link>
             <S_Button
-              onClick={user ? () => logout() : () => navigate("/login")}
+              onClick={authStatus ? () => logout() : () => navigate("/login")}
             >
-              {user ? "Выйти" : "Войти"}
+              {authStatus ? "Выйти" : "Войти"}
             </S_Button>
           </div>
         </S_Inner>

@@ -11,7 +11,6 @@ import { S_FormInput } from "../../styled/S_FormInput";
 import { S_FormInputError } from "../../styled/S_FormInputError";
 import { S_FormLabel } from "../../styled/S_FormLabel";
 import { Context } from "../../context/Context";
-import API from "../../API";
 
 const S_Wrapper = styled.section`
   margin: 50px 0 0 0;
@@ -23,7 +22,8 @@ const S_Title = styled.h1`
 `;
 
 function Me() {
-  const { getUserData, patchUserData } = useContext(Context);
+  let [loading, setLoading] = useState(false);
+  const { userInfo, getUserData, patchUserData } = useContext(Context);
   const {
     register,
     handleSubmit,
@@ -32,27 +32,24 @@ function Me() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  let [userData, setUserData] = useState({});
-  let [loading, setLoading] = useState(false);
   const onSubmit = (data) => {
-    setUserData(patchUserData(data));
+    patchUserData(data);
   };
   useEffect(() => {
-    async function fetchData() {
-      const d = await getUserData();
-      await setUserData(d);
-      console.log(getUserData());
-      console.log(getUserData());
-    }
-    fetchData();
+    (async function() {
+      setLoading(true);
+      await getUserData();
+      setLoading(false);
+    }())
   }, []);
+
   useEffect(() => {
     reset({
-      // email: userData.email,
-      // firstName: userData.firstName,
-      // lastName: userData.lastName,
+      email: userInfo.email,
+      firstName: userInfo.firstName,
+      lastName: userInfo.lastName,
     });
-  }, [userData]);
+  }, [userInfo]);
 
   return (
     <S_Wrapper>

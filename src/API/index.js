@@ -21,21 +21,24 @@ export default class API {
     };
     return axios(config);
   }
-  static getUserData(data) {
+  static async getUserData(authToken, data) {
     const config = {
       method: "get",
       url: `${BASE_URL}/auth/me`,
       headers: {
-        Authorization: `Bearer ${data}`,
+        "Content-Type": "application/json;charset=UTF-8",
+        Authorization: `Bearer ${authToken}`,
       },
+      data: JSON.stringify(data),
     };
-    return axios(config);
+    return await axios(config);
   }
   static patchUserData(data) {
     const config = {
       method: "patch",
       url: `${BASE_URL}/auth/me`,
       headers: {
+        "Content-Type": "application/json;charset=UTF-8",
         Authorization: `Bearer ${data}`,
       },
     };
