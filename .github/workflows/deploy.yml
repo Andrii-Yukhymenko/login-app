@@ -1,0 +1,30 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy app
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host: ${{secrets.SSH_HOST}} # IP address of the server you wish to ssh into
+          key: ${{secrets.SSH_KEY}} # Private key of the server
+          username: ${{ secrets.SSH_USERNAME }} # User of the server you want to ssh into
+
+          script: |
+            cd /
+            rm -rf /var/www/login-app/
+            rm -rf /home/cloned-repo-login-app/
+            cd /var/www
+            mkdir login-app
+            cd /home
+            mkdir cloned-repo-login-app
+            cd cloned-repo-login-app
+            git clone https://github.com/Andrii-Yukhymenko/login-app.git
+            cd login-app/
+            npm install
+            npm start build
+            cp -r build/* /var/www/login-app
