@@ -21,7 +21,7 @@ export default class API {
     };
     return axios(config);
   }
-  static async getUserData(authToken, data) {
+  static async getUserData(authToken) {
     const config = {
       method: "get",
       url: `${BASE_URL}/auth/me`,
@@ -29,18 +29,18 @@ export default class API {
         "Content-Type": "application/json;charset=UTF-8",
         Authorization: `Bearer ${authToken}`,
       },
-      data: JSON.stringify(data),
     };
     return await axios(config);
   }
-  static patchUserData(data) {
+  static patchUserData(authToken, data) {
     const config = {
       method: "patch",
       url: `${BASE_URL}/auth/me`,
       headers: {
         "Content-Type": "application/json;charset=UTF-8",
-        Authorization: `Bearer ${data}`,
+        Authorization: `Bearer ${authToken}`,
       },
+      data: JSON.stringify(data),
     };
     return axios(config);
   }

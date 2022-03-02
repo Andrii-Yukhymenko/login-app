@@ -32,15 +32,17 @@ function Me() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => {
-    patchUserData(data);
+  const onSubmit = async (newUserData) => {
+    await setLoading(true);
+    await patchUserData(newUserData);
+    await setLoading(false);
   };
   useEffect(() => {
-    (async function() {
+    (async function () {
       setLoading(true);
       await getUserData();
       setLoading(false);
-    }())
+    })();
   }, []);
 
   useEffect(() => {
@@ -55,30 +57,24 @@ function Me() {
     <S_Wrapper>
       <S_Container>
         <S_Title>Изменить данные</S_Title>
-        {!loading ? (
-          <>
-            <S_Form onSubmit={handleSubmit(onSubmit)}>
-              <label>
-                <S_FormLabel>Email</S_FormLabel>
-                <S_FormInput {...register("email")} />
-                <S_FormInputError>{errors.email?.message}</S_FormInputError>
-              </label>
-              <label>
-                <S_FormLabel>First name</S_FormLabel>
-                <S_FormInput {...register("firstName")} />
-                <S_FormInputError>{errors.firstName?.message}</S_FormInputError>
-              </label>
-              <label>
-                <S_FormLabel>Last name</S_FormLabel>
-                <S_FormInput {...register("lastName")} />
-                <S_FormInputError>{errors.lastName?.message}</S_FormInputError>
-              </label>
-              <S_FormButton type="submit">Подтвердить</S_FormButton>
-            </S_Form>
-          </>
-        ) : (
-          <Loader />
-        )}
+        {loading && <p>Загрузка</p>}
+        <>
+          <S_Form onSubmit={handleSubmit(onSubmit)}>
+            <label>
+              <S_FormLabel>First name</S_FormLabel>
+              <S_FormInput {...register("firstName")} />
+              <S_FormInputError>{errors.firstName?.message}</S_FormInputError>
+            </label>
+            <label>
+              <S_FormLabel>Last name</S_FormLabel>
+              <S_FormInput {...register("lastName")} />
+              <S_FormInputError>{errors.lastName?.message}</S_FormInputError>
+            </label>
+            <S_FormButton style={{width: '130px'}} type="submit">
+              {loading ? <Loader /> : "Подтвердить"}
+            </S_FormButton>
+          </S_Form>
+        </>
       </S_Container>
     </S_Wrapper>
   );

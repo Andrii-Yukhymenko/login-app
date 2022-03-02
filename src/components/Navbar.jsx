@@ -4,15 +4,17 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
+import { IoHomeOutline } from "react-icons/io5";
 
 const S_Wrapper = styled.section`
-  padding: 20px;
+  padding: 15px;
   background: #61dafb;
 `;
 const S_Logo = styled(Link)`
   cursor: pointer;
-  padding: 5px;
+  padding: 10px;
   color: #fff;
+  font-size: 23px;
 `;
 const S_Inner = styled.div`
   display: flex;
@@ -30,6 +32,7 @@ const S_Button = styled.button`
   border-radius: 5px;
   margin-left: 40px;
   border: 2px solid #fff;
+  background: none;
 `;
 function Navbar() {
   const { authStatus, logout } = useContext(Context);
@@ -38,15 +41,15 @@ function Navbar() {
     <S_Wrapper>
       <S_Container>
         <S_Inner>
-          <S_Logo to="/">React App</S_Logo>
+          <S_Logo to="/"><IoHomeOutline/></S_Logo>
           <div>
             <S_Link to={authStatus ? "/me" : "/registration"}>
-              {authStatus ? "Профиль" : "Регистрация"}
+              {authStatus ? "Profile" : "Register"}
             </S_Link>
             <S_Button
               onClick={authStatus ? () => logout() : () => navigate("/login")}
             >
-              {authStatus ? "Выйти" : "Войти"}
+              {authStatus ? "Log out" : "Login"}
             </S_Button>
           </div>
         </S_Inner>

@@ -66,13 +66,12 @@ const ContextProvider = ({ children }) => {
         }
       });
   };
-  const patchUserData = (data) => {
-    API.patchUserData(Cookies.get('user'), data)
+  const patchUserData = (newUserData) => {
+    API.patchUserData(Cookies.get("user"), newUserData)
       .then((response) => {
         if (response.status === 200) {
-          // getUserData();
           setUserInfo(response.data);
-          console.log("patched");
+          // alert("User data is changed");
         }
       })
       .catch((e) => {
