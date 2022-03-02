@@ -26,5 +26,5 @@ jobs:
             git clone https://github.com/Andrii-Yukhymenko/login-app.git
             cd login-app/
             npm install
-            npm start build
+            npm run build
             cp -r build/* /var/www/login-app
