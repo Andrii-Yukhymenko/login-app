@@ -8,11 +8,10 @@ export const schema = yup
     password: yup
       .string()
       .required("Please Enter your password")
-      // .matches(
-      //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
-      //   "Password must contain 8 characters, one uppercase, one Lowercase and one number"
-      // ),
-      ,
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/,
+        "Password must contain 8 characters, one uppercase, one Lowercase and one number"
+      ),
     passwordConfirmation: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match"),

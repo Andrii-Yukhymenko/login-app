@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./validationSchema";
+import React, {useContext, useState} from "react";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {schema} from "./validationSchema";
 import styled from "styled-components";
-import { S_Container } from "../../styled/S_Container";
-import { Context } from "../../context/Context";
+import {S_Container} from "../../styled/S_Container";
+import {Context} from "../../context/Context";
 import Loader from "../../components/Loader/Loader";
-import { S_FormButton } from "../../styled/S_FormButton";
+import {S_FormButton} from "../../styled/S_FormButton";
 import {S_FormInput} from "../../styled/S_FormInput";
 import {S_Form} from "../../styled/S_Form";
 import {S_FormInputError} from "../../styled/S_FormInputError";
@@ -41,7 +41,7 @@ function Login() {
   return (
     <S_Wrapper>
       <S_Container>
-        <S_Title>Войти в аккаунт</S_Title>
+        <S_Title>Sign in</S_Title>
         <S_Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <S_FormLabel>Login</S_FormLabel>
@@ -54,7 +54,7 @@ function Login() {
             <S_FormInputError>{errors.password?.message}</S_FormInputError>
           </label>
           <S_FormButton type="submit">
-            {loading ? <Loader /> : "Войти"}
+            {loading ? <Loader /> : "Sign in"}
           </S_FormButton>
         </S_Form>
       </S_Container>

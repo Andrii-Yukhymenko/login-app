@@ -70,7 +70,7 @@ function Me() {
               <S_FormInput {...register("lastName")} />
               <S_FormInputError>{errors.lastName?.message}</S_FormInputError>
             </label>
-            <S_FormButton style={{width: '130px'}} type="submit">
+            <S_FormButton type="submit">
               {loading ? <Loader /> : "Подтвердить"}
             </S_FormButton>
           </S_Form>

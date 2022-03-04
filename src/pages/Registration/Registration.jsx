@@ -46,7 +46,7 @@ function Registration() {
   return (
     <S_Wrapper>
       <S_Container>
-        <S_Title>Регистрация</S_Title>
+        <S_Title>Registration</S_Title>
         <S_Form onSubmit={handleSubmit(onSubmit)}>
           <label>
             <S_FormLabel>Email</S_FormLabel>
@@ -77,7 +77,7 @@ function Registration() {
             <S_FormInputError>{errors.passwordConfirmation?.message}</S_FormInputError>
           </label>
           <S_FormButton type="submit">
-            {loading ? <Loader /> : "Зарегистрироваться"}
+            {loading ? <Loader /> : "Register"}
           </S_FormButton>
         </S_Form>
       </S_Container>

@@ -4,17 +4,16 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import { IoHomeOutline } from "react-icons/io5";
 
 const S_Wrapper = styled.section`
   padding: 15px;
-  background: #61dafb;
+  background: #006979;
 `;
 const S_Logo = styled(Link)`
   cursor: pointer;
   padding: 10px;
   color: #fff;
-  font-size: 23px;
+  font-size: 21px;
 `;
 const S_Inner = styled.div`
   display: flex;
@@ -25,6 +24,7 @@ const S_Link = styled(Link)`
   padding: 7px 20px;
   border-radius: 5px;
   margin-left: 40px;
+  background: #ff765c;
   border: 2px solid #fff;
 `;
 const S_Button = styled.button`
@@ -32,7 +32,7 @@ const S_Button = styled.button`
   border-radius: 5px;
   margin-left: 40px;
   border: 2px solid #fff;
-  background: none;
+  background: #ff765c;
 `;
 function Navbar() {
   const { authStatus, logout } = useContext(Context);
@@ -41,15 +41,15 @@ function Navbar() {
     <S_Wrapper>
       <S_Container>
         <S_Inner>
-          <S_Logo to="/"><IoHomeOutline/></S_Logo>
+          <S_Logo to="/">Login app</S_Logo>
           <div>
             <S_Link to={authStatus ? "/me" : "/registration"}>
-              {authStatus ? "Profile" : "Register"}
+              {authStatus ? "Profile" : "Sign up"}
             </S_Link>
             <S_Button
               onClick={authStatus ? () => logout() : () => navigate("/login")}
             >
-              {authStatus ? "Log out" : "Login"}
+              {authStatus ? "Log out" : "Sign in"}
             </S_Button>
           </div>
         </S_Inner>
