@@ -20,9 +20,21 @@ const S_Title = styled.h1`
   margin: 0 0 30px 0;
   text-align: center;
 `;
+const S_ModalWindow = styled.div`
+  padding: 20px;
+  border-radius: 10px;
+  background: #ff765c;
+  margin: 30px auto 0 auto;
+  width: 200px;
+  box-shadow: 0px 10px 59px -13px rgba(34, 60, 80, 0.6);
+`;
+const S_ModalText = styled.p`
+  text-align: center;
+`;
 
 function Me() {
   let [loading, setLoading] = useState(false);
+  const [modalWindow, setModalWindow] = useState(false);
   const { userInfo, getUserData, patchUserData } = useContext(Context);
   const {
     register,
@@ -32,10 +44,15 @@ function Me() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const showModalWindow = () => {
+    setModalWindow(true);
+    setTimeout(() => {
+      setModalWindow(false);
+    }, 3000);
+  };
   const onSubmit = async (newUserData) => {
-    await setLoading(true);
     await patchUserData(newUserData);
-    await setLoading(false);
+    showModalWindow();
   };
   useEffect(() => {
     (async function () {
@@ -56,8 +73,8 @@ function Me() {
   return (
     <S_Wrapper>
       <S_Container>
-        <S_Title>Изменить данные</S_Title>
-        {loading && <p>Загрузка</p>}
+        <S_Title>Change user data</S_Title>
+        {loading && <Loader/>}
         <>
           <S_Form onSubmit={handleSubmit(onSubmit)}>
             <label>
@@ -71,9 +88,14 @@ function Me() {
               <S_FormInputError>{errors.lastName?.message}</S_FormInputError>
             </label>
             <S_FormButton type="submit">
-              {loading ? <Loader /> : "Подтвердить"}
+              {loading ? <Loader /> : "Confirm"}
             </S_FormButton>
           </S_Form>
+          {modalWindow && (
+            <S_ModalWindow>
+              <S_ModalText>User data changed</S_ModalText>
+            </S_ModalWindow>
+          )}
         </>
       </S_Container>
     </S_Wrapper>
